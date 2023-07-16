@@ -1,0 +1,158 @@
+--Crear base de datos
+Create database Tienda;
+--Usar base de datos
+Use Tienda;
+--Crear tablas de programador
+Create table Empleado(
+ID_Empleado int primary key not null,
+Nom_Emp varchar (50) not null,
+Ap_Emp varchar (50) not null,
+RFC_Emp varchar (50) not null,
+Fech_Nac_Emp date not null,
+Direccion_Emp varchar (50) not null
+)
+
+Create table AreaFuncional(
+ID_Area int primary key not null,
+Nom_Area varchar (50) not null,
+Asignacion varchar (50) not null,
+Descripcon_Area varchar (50) not null
+)
+
+Create table Puesto(
+ID_Puesto int primary key not null,
+ID_Area int not null,
+Nom_Puesto varchar (50) not null,
+Descripcon_Puesto varchar (50) not null
+CONSTRAINt FK_Area FOREIGN key (ID_Area) REFERENCEs AreaFuncional (ID_Area),
+)
+
+Create table Salario(
+ID_Salario int primary key not null,
+ID_Puesto int not null,
+ID_Empleado int not null,
+Monto float not null,
+Prestaciones varchar (50) not null
+CONSTRAINt FK_Empleado FOREIGN key (ID_Empleado) REFERENCEs Empleado (ID_Empleado),
+)
+
+Create table Personal(
+ID_Personal int primary key not null,
+Nom_personal varchar (50) not null,
+Apellido_personal varchar (50) not null,
+ID_Empleado int not null,
+ID_Puesto int not null,
+ID_Salario int not null
+CONSTRAINt FK_Empleado1 FOREIGN key (ID_Empleado) REFERENCEs Empleado (ID_Empleado),
+CONSTRAINt FK_Salario FOREIGN key (ID_Salario) REFERENCEs Salario (ID_Salario),
+CONSTRAINt FK_Puesto FOREIGN key (ID_Puesto) REFERENCEs Puesto (ID_Puesto),
+)
+--Tablas de bodega
+
+Create table Sucursal(
+ID_Sucursal int primary key not null,
+Nom_Suc varchar (50) not null,
+Direccion_Suc varchar (50) not null
+)
+
+Create table Proveedor(
+ID_Prov int primary key not null,
+Nom_Prov varchar (50) not null,
+Apellido_Prov varchar (50) not null
+)
+
+Create table Producto(
+ID_Producto int primary key not null,
+ID_Prov int not null,
+Nom_Prod varchar (50) not null,
+Existencia int not null,
+Precio int not null,
+CONSTRAINt FK_Proveedor FOREIGN key (ID_Prov) REFERENCEs Proveedor (ID_Prov),
+)
+
+Create table Empleado_Bodega(
+ID_Empbod int primary key not null,
+ID_Personal int not null,
+ID_Sucursal int not null,
+CONSTRAINt FK_Sucursal FOREIGN key (ID_Sucursal) REFERENCEs Sucursal (ID_Sucursal),
+CONSTRAINt FK_PersonalB FOREIGN key (ID_Personal) REFERENCEs Personal (ID_Personal),
+)
+
+Create table Bodega(
+ID_Bodega int primary key not null,
+ID_Producto int  not null,
+ID_Prov int  not null,
+ID_Sucursal int  not null,
+ID_Empbod int  not null,
+CONSTRAINt FK_Producto FOREIGN key (ID_Producto) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Proveedor1 FOREIGN key (ID_Prov) REFERENCEs Proveedor (ID_Prov),
+CONSTRAINt FK_Sucursal1 FOREIGN key (ID_Sucursal) REFERENCEs Sucursal (ID_Sucursal),
+CONSTRAINt FK_Puesto1 FOREIGN key (ID_Empbod) REFERENCEs Empleado_Bodega (ID_Empbod),
+)
+
+--Tablas de Tiket
+
+Create table Cliente(
+ID_Cliente int primary key not null,
+Nom_Cliente varchar (50) not null,
+Ap_Cliente varchar (50) not null,
+RFC_Cliente varchar (50) not null,
+Domicilio varchar (50) not null
+)
+
+Create table Tienda(
+ID_Tienda int primary key not null,
+Nom_Suc varchar (50) not null,
+Estado varchar (50) not null,
+Colonia varchar (50) not null,
+CP int not null,
+Fecha_Ap date not null,
+)
+
+Create table Vendedor(
+ID_Vendedor int primary key not null,
+ID_Personal int not null,
+ID_Tienda int not null,
+CONSTRAINt FK_Tienda FOREIGN key (ID_Tienda) REFERENCEs Tienda (ID_Tienda),
+CONSTRAINt FK_PersonalV FOREIGN key (ID_Personal) REFERENCEs Personal (ID_Personal),
+)
+
+Create table Cuenta(
+ID_Cuenta int primary key not null,
+ID_Vendedor int not null,
+ID_Producto int not null,
+Cantadad int not null,
+ID_Producto1 int not null,
+Cantadad1 int not null,
+ID_Producto2 int not null,
+Cantadad2 int not null,
+ID_Producto3 int not null,
+Cantadad3 int not null,
+ID_Producto4 int not null,
+Cantadad4 int not null,
+ID_Producto5 int not null,
+Cantadad5 int not null,
+Total_Venta int not null,
+CONSTRAINt FK_Producto1 FOREIGN key (ID_Producto) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Producto2 FOREIGN key (ID_Producto1) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Producto3 FOREIGN key (ID_Producto2) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Producto4 FOREIGN key (ID_Producto3) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Producto5 FOREIGN key (ID_Producto4) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Producto6 FOREIGN key (ID_Producto5) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Vendedor FOREIGN key (ID_Vendedor) REFERENCEs Vendedor (ID_Vendedor),
+)
+Create table Tiket(
+ID_Tiket int primary key not null,
+ID_Tienda int not null,
+ID_Cliente int not null,
+ID_Producto int not null,
+ID_Cuenta int not null,
+ID_Vendedor int not null,
+Total_Venta int not null,
+CONSTRAINt FK_Tienda1 FOREIGN key (ID_Tienda) REFERENCEs Tienda (ID_Tienda),
+CONSTRAINt FK_Cliente FOREIGN key (ID_Cliente) REFERENCEs Cliente (ID_Cliente),
+CONSTRAINt FK_Producto7 FOREIGN key (ID_Producto) REFERENCEs Producto (ID_Producto),
+CONSTRAINt FK_Cuenta FOREIGN key (ID_Cuenta) REFERENCEs Cuenta (ID_Cuenta),
+CONSTRAINt FK_Vendedor1 FOREIGN key (ID_Vendedor) REFERENCEs Vendedor (ID_Vendedor),
+CONSTRAINt FK_Total FOREIGN key (Total_Venta) REFERENCEs Cuenta (ID_Cuenta),
+)
