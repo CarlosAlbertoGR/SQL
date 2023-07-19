@@ -1,0 +1,85 @@
+--Creacion de la Base de Datos
+Create database  Inventarios;
+--Usar la Base de Datos
+Use Inventarios;
+--Creando las tablas de programador
+Create table Articulo(
+ID_Articulo int primary key not null,
+Nom_Art varchar (50) not null,
+Precio float not null
+)
+Create  table Bodega(
+ID_Bodega int primary key not null,
+Nom_Bodega varchar(50)not null,
+)
+Create table Empleados(
+ID_Empleado int primary key not null,
+Nom_emp varchar (50) not null,
+Direccion varchar (50) not null,
+ID_Bodega int not null,
+CONSTRAINt FK_Bodega FOREIGN key (ID_Bodega) REFERENCEs Bodega (ID_Bodega),
+)
+--Creando la tabla de usuario
+Create table Existencias(
+ID_Existencia int primary key not null,
+ID_Articulo int  not null,
+ID_Bodega int  not null,
+Existencias int  not null,
+CONSTRAINt FK_Articulo FOREIGN key (ID_Articulo) REFERENCEs Articulo (ID_Articulo),
+CONSTRAINt FK_Bodega2 FOREIGN key (ID_Bodega) REFERENCEs Bodega (ID_Bodega),
+)
+--Insertar datos en la tabla bodega
+insert into Bodega (ID_Bodega,Nom_Bodega) values (1,'Juguetes');
+insert into Bodega (ID_Bodega,Nom_Bodega) values (2,'Ropa');
+insert into Bodega (ID_Bodega,Nom_Bodega) values (3,'Electronicos');
+insert into Bodega (ID_Bodega,Nom_Bodega) values (4,'Medicinas');
+insert into Bodega (ID_Bodega,Nom_Bodega) values (5,'Comida');
+
+--Actualizar el dato de nombre de bodega en el ID 1
+
+update Bodega set Nom_Bodega = 'Juguete' where ID_Bodega=1
+
+--Insertar datos en la tabla Articulo
+
+insert into Articulo (ID_Articulo,Nom_Art,Precio) values (1,'Coche',120.00);
+insert into Articulo (ID_Articulo,Nom_Art,Precio) values (2,'Camisa',55.60);
+insert into Articulo (ID_Articulo,Nom_Art,Precio) values (3,'Television',11000.00);
+insert into Articulo (ID_Articulo,Nom_Art,Precio) values (4,'Paracetamol',40.50);
+insert into Articulo (ID_Articulo,Nom_Art,Precio) values (5,'Carne',150.80);
+
+--Actualizar el dato de nombre de articulo en el ID 2
+
+update Articulo set Nom_Art= 'Camisa Roja' where ID_Articulo=2;
+
+--Insertar datos en la tabla Empleados
+
+insert into Empleados (ID_Empleado,Nom_emp,Direccion,ID_Bodega) values (1001,'Juan','Cucutitlan',1);
+insert into Empleados (ID_Empleado,Nom_emp,Direccion,ID_Bodega) values (1002,'Maria','Tultitlan',2);
+insert into Empleados (ID_Empleado,Nom_emp,Direccion,ID_Bodega) values (1003,'Luis','Tlalnepantla',3);
+insert into Empleados (ID_Empleado,Nom_emp,Direccion,ID_Bodega) values (1004,'Ana','Coacalco',4);
+insert into Empleados (ID_Empleado,Nom_emp,Direccion,ID_Bodega) values (1005,'Alberto','Atizapan',5);
+
+--Actualizar el dato de Direccion en el ID 1003
+
+update Empleados set Direccion='Tepotzotlan' where ID_Empleado=1003
+
+--Insertar datos en la tabla Existencias
+
+insert into Existencias (ID_Existencia,ID_Articulo,ID_Bodega,Existencias) values (9001,1,1,5000);
+insert into Existencias (ID_Existencia,ID_Articulo,ID_Bodega,Existencias) values (9002,2,2,10860);
+insert into Existencias (ID_Existencia,ID_Articulo,ID_Bodega,Existencias) values (9003,3,3,1500);
+insert into Existencias (ID_Existencia,ID_Articulo,ID_Bodega,Existencias) values (9004,4,4,10500);
+insert into Existencias (ID_Existencia,ID_Articulo,ID_Bodega,Existencias) values (9005,5,5,8600);
+
+--Actualizar el dato de Existencia en el ID 9004
+
+update Existencias set Existencias=800 where ID_Existencia=9004
+
+--Realizar las consultas con inner join de las tablas Existencias y Empleados 
+
+select * from Existencias
+inner join Articulo on Existencias.ID_Articulo = Articulo.ID_Articulo
+inner join Bodega on Existencias.ID_Bodega = Bodega.ID_Bodega
+
+select * from Empleados
+inner join Bodega on Empleados.ID_Bodega = Bodega.ID_Bodega
